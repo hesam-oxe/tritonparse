@@ -15,6 +15,8 @@ interface DiffComparisonViewProps {
   language?: string;
   height?: string;
   options?: DiffOptions;
+  leftLabel?: string;
+  rightLabel?: string;
 }
 
 // Monaco editor types vary by version, so we need to use a loose type for the editor options
@@ -63,6 +65,8 @@ const DiffComparisonView: React.FC<DiffComparisonViewProps> = ({
   language = "plaintext",
   height = "calc(100vh - 12rem)",
   options,
+  leftLabel,
+  rightLabel,
 }) => {
   const monacoOptions = useMemo(() => {
     const hideUnchanged = options?.onlyChanged
@@ -179,6 +183,10 @@ const DiffComparisonView: React.FC<DiffComparisonViewProps> = ({
 
   return (
     <div className="w-full border border-gray-200 rounded bg-white">
+      <div className="flex justify-between mb-2 px-2 pt-2">
+        <span className="text-sm font-medium text-gray-600">{leftLabel || "Original"}</span>
+        <span className="text-sm font-medium text-gray-600">{rightLabel || "Modified"}</span>
+      </div>
       <div
         className="w-full resize-y overflow-auto"
         style={{ height: `${containerHeight}px`, minHeight: 240 }}
